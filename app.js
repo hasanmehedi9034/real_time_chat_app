@@ -1,8 +1,17 @@
+//  External imports
 const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const path = require('path');
 const cookieParser = require("cookie-parser");
+
+
+// Internal Imports
+const  { notFoundHandler, errorHandler } = require('./middlewares/common/errorHandler')
+const loginRouter = require('./router/loginRouter')
+const usersRouter = require('./router/usersRouter')
+const inboxRouter = require('./router/inboxRouter')
+
 
 // Initialize main app
 const app = express();
@@ -37,9 +46,17 @@ app.use(cookieParser(process.env.COOKEI_SECRET));
 
 
 // Routing setup
+app.use('/', loginRouter);
+app.use('/users', usersRouter);
+app.use('/inbox', inboxRouter);
 
 
-// Error Handling
+// 404 Not found handler
+app.use(notFoundHandler);
+
+
+// common error handler
+app.use(errorHandler);
 
 
 // run server
