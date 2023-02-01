@@ -29,6 +29,7 @@ async function addUser(req, res, next) {
             avatar: req.files[0].filename,
             password: hashedPassword,
         });
+        
     } 
     else {
         newUser = new User({
@@ -36,6 +37,8 @@ async function addUser(req, res, next) {
             password: hashedPassword,
         });
     }
+
+    console.log(req.body);
 
     // save user or send error
     try {
